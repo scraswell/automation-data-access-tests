@@ -10,20 +10,23 @@ namespace Craswell.Automation.DataAccess.Tests
     [TestFixture()]
     public class Test
     {
-        private ISessionFactory sessionFactory = new Configuration()
-            .Configure()
-            .AddAssembly(typeof(AccountData).Assembly)
-            .BuildSessionFactory();
+        private ISessionFactory sessionFactory;
 
         [Test()]
         public void TestCase()
         {
+            this.sessionFactory = new Configuration()
+                .Configure()
+                .AddAssembly(typeof(AccountData).Assembly)
+                .BuildSessionFactory();
+
             AccountData account = new AccountData()
             {
                 Name = "Test Account",
                 Number = "01122311",
                 Balance = 0.00,
-                Transactions = new List<IAccountTransaction>()
+                Transactions = new List<IAccountTransaction>(),
+                Statements = new List<IAccountStatement>()
             };
 
             AccountData account2 = null;
@@ -42,7 +45,15 @@ namespace Craswell.Automation.DataAccess.Tests
                 Subject = "Test Subject"
             };
 
+            AccountStatementData statement1 = new AccountStatementData()
+            {
+                Timestamp = new DateTime(2015, 10, 31),
+                AccountNumber = "01122311",
+                FileName = string.Format("{0}.pdf", Guid.NewGuid())
+            };
+
             account.Transactions.Add(transaction);
+            account.Statements.Add(statement1);
 
             using (ISession session = this.sessionFactory.OpenSession())
             using (ITransaction tx = session.BeginTransaction())
@@ -55,6 +66,7 @@ namespace Craswell.Automation.DataAccess.Tests
             {
                 account2 = session.Get<AccountData>(account.Id);
                 Assert.AreEqual(1, account2.Transactions.Count);
+                Assert.AreEqual(1, account2.Statements.Count);
             }
 
             Assert.AreEqual(account.Id, account2.Id);
@@ -83,6 +95,9 @@ namespace Craswell.Automation.DataAccess.Tests
                 session.Delete(account);
                 tx.Commit();
             }
+
+            this.sessionFactory.Dispose();
+            this.sessionFactory = null;
         }
     }
 }
