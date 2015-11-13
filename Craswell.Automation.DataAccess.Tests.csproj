@@ -54,7 +54,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Craswell.Automation.DataAccess\Craswell.Automation.DataAccess.csproj">
+    <ProjectReference Include="..\automation-data-access\Craswell.Automation.DataAccess.csproj">
       <Project>{0E48F0AC-B3C1-4F0A-A89A-1EF444C9F47E}</Project>
       <Name>Craswell.Automation.DataAccess</Name>
     </ProjectReference>
