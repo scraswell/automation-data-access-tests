@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using NHibernate;
 using NHibernate.Cfg;
+using NHibernate.Tool.hbm2ddl;
 
 namespace Craswell.Automation.DataAccess.Tests
 {
@@ -11,6 +12,22 @@ namespace Craswell.Automation.DataAccess.Tests
     public class Test
     {
         private ISessionFactory sessionFactory;
+
+        private Configuration hibernateConfiguration;
+
+        [Test()]
+        public void CreateSchema()
+        {
+            this.hibernateConfiguration = new Configuration()
+                .Configure()
+                .AddAssembly(typeof(AccountData).Assembly);
+
+            new SchemaExport(this.hibernateConfiguration)
+                .Execute(false, true, false);
+
+            this.sessionFactory = this.hibernateConfiguration
+                .BuildSessionFactory();
+        }
 
         [Test()]
         public void TestCase()

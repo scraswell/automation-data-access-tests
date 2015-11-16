@@ -1,10 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-configuration  xmlns="urn:nhibernate-configuration-2.2" >
-	<session-factory name="Craswell.Automation.DataAccess.Tests">
+	<!--<session-factory name="Craswell.Automation.DataAccess.Tests">
 		<property name="connection.driver_class">NHibernate.Driver.MySqlDataDriver</property>
 		<property name="connection.connection_string">
 			Database=craswell_automation_data;Data Source=localhost;User Id=root;Password=root.,.Pa$$word
 		</property>
 		<property name="dialect">NHibernate.Dialect.MySQLDialect</property>
-	</session-factory>
+	</session-factory>-->
+
+  <session-factory name="Craswell.Automation.DataAccess.Tests">
+    <property name="connection.driver_class">NHibernate.Driver.SqlClientDriver</property>
+      <property name="connection.connection_string">
+        Server=(local)\sqlexpress;initial catalog=automation;Integrated Security=SSPI
+      </property>
+    <property name="dialect">NHibernate.Dialect.MsSql2008Dialect</property>
+  </session-factory>
 </hibernate-configuration>
