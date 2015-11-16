@@ -18,15 +18,15 @@ namespace Craswell.Automation.DataAccess.Tests
         [Test()]
         public void CreateSchema()
         {
-            this.hibernateConfiguration = new Configuration()
-                .Configure()
-                .AddAssembly(typeof(AccountData).Assembly);
+            //this.hibernateConfiguration = new Configuration()
+            //    .Configure()
+            //    .AddAssembly(typeof(AccountData).Assembly);
 
-            new SchemaExport(this.hibernateConfiguration)
-                .Execute(false, true, false);
+            //new SchemaExport(this.hibernateConfiguration)
+            //    .Execute(false, true, false);
 
-            this.sessionFactory = this.hibernateConfiguration
-                .BuildSessionFactory();
+            //this.sessionFactory = this.hibernateConfiguration
+            //    .BuildSessionFactory();
         }
 
         [Test()]
